@@ -48,8 +48,8 @@
             <v-form @submit.prevent="addEvent">
               <v-text-field v-model="name" type="text" label="event name (required)"></v-text-field>
               <v-text-field v-model="details" type="text" label="detail"></v-text-field>
-              <v-text-field v-model="start" type="date" label="start (required)"></v-text-field>
-              <v-text-field v-model="end" type="date" label="end (required)"></v-text-field>
+              <v-text-field v-model="startTime" type="time" label="startTime (required)"></v-text-field>
+              <v-text-field v-model="endTime" type="time" label="endTime (required)"></v-text-field>
               <v-text-field v-model="color" type="color" label="color (click to open color menu)"></v-text-field>
               <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog = false">
                 create event
@@ -138,8 +138,10 @@ export default {
     },
     name: null,
     details: null,
-    start: null,
-    end: null,
+    //start: null,
+    startTime:null,
+    endTime:null,
+    //end: null,
     color: '#1976D2', // default event color
     currentlyEditing: null,
     selectedEvent: {},
@@ -211,19 +213,23 @@ export default {
       this.$refs.calendar.next()
     },
     async addEvent () {
-      if (this.name && this.start && this.end) {
+      if (this.name && this.startTime && this.endTime) {
         await db.collection("calEvent").add({
           name: this.name,
           details: this.details,
-          start: this.start,
-          end: this.end,
+          startTime:this.startTime,
+          endTime: this.endTime,
+          //start: this.start,
+          //end: this.end,
           color: this.color
         })
         this.getEvents()
         this.name = '',
         this.details = '',
-        this.start = '',
-        this.end = '',
+        //this.start = '',
+        this.startTime = '',
+        this.endTime = '',
+        //this.end = '',
         this.color = ''
       } else {
         alert('You must enter event name, start, and end time')
