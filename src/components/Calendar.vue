@@ -48,6 +48,7 @@
             <v-form @submit.prevent="addEvent">
               <v-text-field v-model="name" type="text" label="event name (required)"></v-text-field>
               <v-text-field v-model="details" type="text" label="detail"></v-text-field>
+              <v-text-field v-model="start" type="date" label="start"></v-text-field>
               <v-text-field v-model="startTime" type="time" label="startTime (required)"></v-text-field>
               <v-text-field v-model="endTime" type="time" label="endTime (required)"></v-text-field>
               <v-text-field v-model="color" type="color" label="color (click to open color menu)"></v-text-field>
@@ -138,7 +139,8 @@ export default {
     },
     name: null,
     details: null,
-    //start: null,
+    start: null,
+    // start: null,
     startTime:null,
     endTime:null,
     //end: null,
@@ -217,6 +219,7 @@ export default {
         await db.collection("calEvent").add({
           name: this.name,
           details: this.details,
+          start: this.start,
           startTime:this.startTime,
           endTime: this.endTime,
           //start: this.start,
@@ -226,6 +229,7 @@ export default {
         this.getEvents()
         this.name = '',
         this.details = '',
+        this.start = '',
         //this.start = '',
         this.startTime = '',
         this.endTime = '',
