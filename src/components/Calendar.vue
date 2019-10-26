@@ -184,10 +184,18 @@ export default {
   },
   methods: {
     async getEvents () {
-      let snapshot = await db.collection('calEvent').get()
+      // eslint-disable-next-line
+      console.log("tried to get an event")
+      let snapshot = await db.collection('calEvent').get().catch(function(error) {
+          // eslint-disable-next-line
+          console.log(error);
+          // eslint-disable-next-line
+          console.log("an error was caught");
+        })
       let events = []
       snapshot.forEach(doc => {
         let appData = doc.data()
+        // eslint-disable-next-line
         console.log(appData)
         appData.id = doc.id
         events.push(appData)
@@ -211,6 +219,8 @@ export default {
       this.$refs.calendar.next()
     },
     async addEvent () {
+      // eslint-disable-next-line
+      console.log("tried to add an event")
       if (this.name && this.start && this.end) {
         await db.collection("calEvent").add({
           name: this.name,
@@ -218,6 +228,11 @@ export default {
           start: this.start,
           end: this.end,
           color: this.color
+        }).catch(function(error) {
+          // eslint-disable-next-line
+          console.log(error);
+          // eslint-disable-next-line
+          console.log("an error was caught");
         })
         this.getEvents()
         this.name = '',
