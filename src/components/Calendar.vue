@@ -46,12 +46,12 @@
         <v-card>
           <v-container>
             <v-form @submit.prevent="addEvent">
-              <v-text-field v-model="name" type="text" label="event name (required)"></v-text-field>
-              <v-text-field v-model="details" type="text" label="detail"></v-text-field>
-              <v-text-field v-model="start" type="date" label="start"></v-text-field>
-              <v-text-field v-model="startTime" type="time" label="startTime (required)"></v-text-field>
-              <v-text-field v-model="endTime" type="time" label="endTime (required)"></v-text-field>
-              <v-text-field v-model="color" type="color" label="color (click to open color menu)"></v-text-field>
+              <v-text-field v-model="name" type="text" label="Event Name (required)"></v-text-field>
+              <v-text-field v-model="details" type="text" label="Details"></v-text-field>
+              <v-text-field v-model="start" type="date" label="Start Date (required)"></v-text-field>
+              <v-text-field v-model="startTime" type="time" label="Start Time (required)"></v-text-field>
+              <v-text-field v-model="endTime" type="time" label="End Time (required)"></v-text-field>
+              <v-text-field v-model="color" type="color" label="Color (click to open color menu)"></v-text-field>
               <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog = false">
                 create event
               </v-btn>
@@ -215,7 +215,7 @@ export default {
       this.$refs.calendar.next()
     },
     async addEvent () {
-      if (this.name && this.startTime && this.endTime) {
+      if (this.name && this.start && this.startTime && this.endTime) {
         await db.collection("calEvent").add({
           name: this.name,
           details: this.details,
