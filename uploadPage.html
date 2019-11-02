@@ -16,7 +16,17 @@
         <form>
             <textarea></textarea>
 
-            <input type="file" name="csvFile">
+            <input type="file" name="csvFile" accept=".csv,image/*" onchange="loadFile(event)">
+            <br>
+            <br>
+            <img id="output"/>
+            <script>
+                var loadFile = function(event) {
+                    var output = document.getElementById('output');
+                    output.src = URL.createObjectURL(event.target.files[0]);
+                };
+            </script>
+
             <input type="submit" name="upload_csv" value="Upload">
 
         </form>
