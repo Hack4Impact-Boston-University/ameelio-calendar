@@ -214,30 +214,71 @@ export default {
     next () {
       this.$refs.calendar.next()
     },
+    checkAvailibility(date,start,end) {
+  
+      var av = 1
+      this.events.forEach(ev => {
+       if(ev.start == date) {
+         if((ev.startTime >= start && ev.startTime <= end) || (ev.endTime >= start && ev.startTime <= end)) {
+           av=0
+         }
+       }
+
+      })
+      return av
+    },
     async addEvent () {
-      if (this.name && this.start && this.startTime && this.endTime) {
-        await db.collection("calEvent").add({
-          name: this.name,
-          details: this.details,
-          start: this.start,
-          startTime:this.startTime,
-          endTime: this.endTime,
-          //start: this.start,
-          //end: this.end,
-          color: this.color
-        })
-        this.getEvents()
-        this.name = '',
-        this.details = '',
-        this.start = '',
-        //this.start = '',
-        this.startTime = '',
-        this.endTime = '',
-        //this.end = '',
-        this.color = ''
-      } else {
-        alert('You must enter event name, start, and end time')
+
+      let availibility = this.checkAvailibility(this.start,this.startTime, this.endTime)
+      console.log(availibility)
+      if (availibility == 1) {
+        if (this.name && this.start && this.startTime <= "16:00" && this.endTime <= "17:00") {
+          await db.collection("calEvent").add({
+            name: this.name,
+            details: this.details,
+            start: this.start,
+            startTime:this.startTime,
+            endTime: this.endTime,
+            //start: this.start,
+            //end: this.end,
+            color: this.color
+          })
+          this.getEvents()
+          this.name = '',
+          this.details = '',
+          this.start = '',
+          //this.start = '',
+          this.startTime = '',
+          this.endTime = '',
+          //this.end = '',
+          this.color = ''
+        } 
+      
+        else if(this.name && this.start && this.startTime > "16:00" && this.endTime > "17:00") {
+          this.getEvents()
+          alert('Apointments after 4 pm are not allowed. ')
+        }
+
+        else {
+          this.getEvents()
+          alert('You must enter event name, start, and end time')
+        }
+
       }
+      else
+      {
+        this.getEvents()
+        
+          this.start = '',
+          //this.start = '',
+          this.startTime = '',
+          this.endTime = '',
+          //this.end = '',
+          
+        alert('This time slot is not available.')
+        
+      }
+      
     },
     editEvent (ev) {
       this.currentlyEditing = ev.id
