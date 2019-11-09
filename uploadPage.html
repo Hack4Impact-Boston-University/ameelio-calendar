@@ -14,9 +14,8 @@
 
         <div>
         <form>
-            <textarea></textarea>
+            <input type="file" name="csvFile" accept=".csv,image/*" onchange="loadFile(event)" value="CSV file">
 
-            <input type="file" name="csvFile" accept=".csv,image/*" onchange="loadFile(event)">
             <br>
             <br>
             <img id="output"/>
@@ -27,10 +26,11 @@
                 };
             </script>
 
-            <input type="submit" name="upload_csv" value="Upload">
+            <input type="submit" name="upload" id="upload" value="Upload">
 
         </form>
         </div>
 
     </body>
 </html>
+
